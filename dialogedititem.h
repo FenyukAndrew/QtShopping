@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+//НЕ ИСПОЛЬЗУЕТСЯ - добавление и редактирование осуществляется в Dialog_Input_New_Item
+
 namespace Ui {
 class DialogEditItem;
 }

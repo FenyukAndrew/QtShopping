@@ -21,7 +21,14 @@ SOURCES += main.cpp\
     dialogedititem.cpp \
     Common.cpp \
     Singleton.cpp \
-    commondb.cpp
+    Database/shopdb.cpp \
+    Database/commondb.cpp \
+    Database/categorydb.cpp \
+    Database/itemdb.cpp \
+    Dialog_Input_New/dialog_input_new_category.cpp \
+    Dialog_Input_New/dialog_input_new_shop.cpp \
+    common_struct_data.cpp \ 
+    Dialog_Input_New/dialog_input_new_item.cpp
 
 HEADERS  += mainwindow.h \
     dialogshops.h \
@@ -31,13 +38,23 @@ HEADERS  += mainwindow.h \
     Common.h \
     Common_parameters.h \
     Singleton.h \
-    commondb.h
+    Database/shopdb.h \
+    Database/commondb.h \
+    Database/categorydb.h \
+    Database/itemdb.h \
+    Dialog_Input_New/dialog_input_new_category.h \
+    Dialog_Input_New/dialog_input_new_shop.h \
+    common_struct_data.h \
+    Dialog_Input_New/dialog_input_new_item.h
 
 FORMS    += mainwindow.ui \
     dialogshops.ui \
     dialogcategories.ui \
     dialogitems.ui \
-    dialogedititem.ui
+    dialogedititem.ui \
+    Dialog_Input_New/dialog_input_new_category.ui \
+    Dialog_Input_New/dialog_input_new_shop.ui \
+    Dialog_Input_New/dialog_input_new_item.ui
 
 CONFIG += c++11
 CONFIG += mobility

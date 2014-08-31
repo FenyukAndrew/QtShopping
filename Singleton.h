@@ -1,4 +1,4 @@
-#include "commondb.h"
+#include "Database/commondb.h"
 #include <QLocale>
 
 //Классическая реализация Singleton
@@ -37,7 +37,7 @@ public:
     }
 
     QSqlQuery* get_new_query() {return mCommonDB.get_new_query();}
-    QLocale& get_locale() {return system_locale;}
+    QLocale& locale() {return system_locale;}
 
 private:
     CommonDB mCommonDB;
