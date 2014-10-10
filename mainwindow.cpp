@@ -19,16 +19,18 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButtonOrder_clicked()
 {
-    DialogShops mDialogShops;
+    DialogShops mDialogShops(e_select);
     mDialogShops.exec();
 }
 
 void MainWindow::on_pushButtonCash_clicked()
 {
-
+//Сохранить в отдельную таблицу - т.к. приложение может быть закрыто
+//Только одна запись, добавить при создании или если нет ни одной
 }
 
 void MainWindow::on_pushButtonBuy_clicked()
 {
-
+    DialogShops mDialogShops(e_buy);
+    mDialogShops.exec();
 }

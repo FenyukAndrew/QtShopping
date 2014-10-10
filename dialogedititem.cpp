@@ -1,4 +1,6 @@
-#include "dialogedititem.h"
+//НЕ ИСПОЛЬЗУЕТСЯ - добавление и редактирование осуществляется в Dialog_Input_New_Item
+
+/*#include "dialogedititem.h"
 #include "ui_dialogedititem.h"
 #include "Common_parameters.h"
 
@@ -14,4 +16,4 @@ DialogEditItem::DialogEditItem(QWidget *parent) :
 DialogEditItem::~DialogEditItem()
 {
     delete ui;
-}
+}*/

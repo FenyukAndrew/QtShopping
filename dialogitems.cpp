@@ -6,10 +6,10 @@
 #include "Dialog_Input_New/dialog_input_new_item.h"
 #include "dialogitems.h"
 
-DialogItems::DialogItems(int m_id_Shop,int m_id_Category,QWidget *parent) :
+DialogItems::DialogItems(int m_id_Shop, int m_id_Category, e_select_buy v_select_buy, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogItems),
-    mItemDB(m_id_Shop,m_id_Category)
+    mItemDB(m_id_Shop,m_id_Category,v_select_buy)
     //id_Shop(m_id_Shop),
     //id_Category(m_id_Category)
 {
@@ -18,6 +18,13 @@ DialogItems::DialogItems(int m_id_Shop,int m_id_Category,QWidget *parent) :
     signalMapper=new QSignalMapper(this);
 
     fill_list_items();
+
+    //Сделать возможным добавление товара во время покупки
+    //Но не категорию - т.к. она будет пуста и не будет доступна
+    /*if (v_select_buy!=e_select)
+    {
+        ui->pushButton_AddItem->setEnabled(0);
+    }*/
 
     ANDROID_MAKE_WINDOW_FULL_SCREEN;
 }
@@ -67,7 +74,7 @@ void DialogItems::on_pushButton_SelectItem_clicked(const int& id_Item)
     {
         //Редактирование объекта
 
-        Dialog_Input_New_Item m_Dialog_Input_New_Item(m_Item);
+        Dialog_Input_New_Item m_Dialog_Input_New_Item(m_Item,e_edit);
         int retCode = m_Dialog_Input_New_Item.exec();
         if (retCode==QDialog::Accepted)
         {
@@ -82,7 +89,7 @@ void DialogItems::on_pushButton_SelectItem_clicked(const int& id_Item)
 void DialogItems::on_pushButton_AddItem_clicked()
 {
     Item m_Item;
-    Dialog_Input_New_Item m_Dialog_Input_New_Item(m_Item);
+    Dialog_Input_New_Item m_Dialog_Input_New_Item(m_Item,e_new);
     int retCode = m_Dialog_Input_New_Item.exec();
     if (retCode==QDialog::Accepted)
     {

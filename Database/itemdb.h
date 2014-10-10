@@ -7,7 +7,7 @@
 class ItemDB
 {
 public:
-    ItemDB(int m_id_Shop,int m_id_Category);
+    ItemDB(int m_id_Shop,int m_id_Category,e_select_buy v_select_buy);
     ~ItemDB();
 
     void addItem(const Item& m_Item);
@@ -25,7 +25,7 @@ private:
 
     const int id_Shop;
     const int id_Category;
-
+    const e_select_buy m_select_buy;
 };
 
 #endif // ITEMDB_H

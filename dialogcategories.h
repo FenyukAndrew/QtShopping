@@ -14,7 +14,7 @@ class DialogCategories : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogCategories(int m_id_shop,QWidget *parent = 0);
+    explicit DialogCategories(int m_id_shop,e_select_buy v_select_buy,QWidget *parent = 0);
     ~DialogCategories();
 
 private slots:
@@ -30,6 +30,7 @@ private:
     QSignalMapper *signalMapper;
 
     CategoryDB mCategoryDB;
+    const e_select_buy m_select_buy;
 
     void fill_list_categories();
     void clear_list_categories();

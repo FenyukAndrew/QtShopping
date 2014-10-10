@@ -14,7 +14,7 @@ class DialogShops : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogShops(QWidget *parent = 0);
+    explicit DialogShops(e_select_buy v_select_buy,QWidget *parent = 0);
     ~DialogShops();
 
 private slots:
@@ -30,6 +30,7 @@ private:
     QSignalMapper *signalMapper;
 
     ShopDB mShopDB;
+    const e_select_buy m_select_buy;
 
     void fill_list_shops();
     void clear_list_shops();

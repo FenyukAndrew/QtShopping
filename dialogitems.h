@@ -14,7 +14,7 @@ class DialogItems : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogItems(int m_id_Shop,int m_id_Category,QWidget *parent = 0);
+    explicit DialogItems(int m_id_Shop,int m_id_Category,e_select_buy v_select_buy,QWidget *parent = 0);
     ~DialogItems();
 
 private slots:

@@ -1,7 +1,10 @@
 #include "itemdb.h"
 #include "Singleton.h"
 
-ItemDB::ItemDB(int m_id_Shop,int m_id_Category) : id_Shop(m_id_Shop),id_Category(m_id_Category)
+ItemDB::ItemDB(int m_id_Shop,int m_id_Category,e_select_buy v_select_buy) : isActivatedSelect(false),
+    id_Shop(m_id_Shop),
+    id_Category(m_id_Category),
+    m_select_buy(v_select_buy)
 {
     mQSqlQuery=Singleton_M::Intance().get_new_query();
 }
@@ -30,8 +33,8 @@ void ItemDB::addItem(const Item& m_Item)
 
 void ItemDB::updateItem(const Item& m_Item)
 {
-    mQSqlQuery->prepare("UPDATE t_List_Items (Name,Current_Price,Amount,Priority)"
-                     " VALUES (:Name,:Current_Price,:Amount,:Priority)"
+    mQSqlQuery->prepare("UPDATE t_List_Items"
+                     " SET Name=:Name,Current_Price=:Current_Price,Amount=:Amount,Priority=:Priority"
                      " WHERE id=:id");
     mQSqlQuery->bindValue(":id", m_Item.id);
     mQSqlQuery->bindValue(":Name", m_Item.Name);
@@ -65,7 +68,7 @@ bool ItemDB::selectItemById(int id_Item,Item& m_Item)
         m_Item.id_category=mQSqlQuery->value(rec.indexOf("id_category")).toInt();
         m_Item.Name=mQSqlQuery->value(rec.indexOf("Name")).toString();
         m_Item.current_Price=mQSqlQuery->value(rec.indexOf("Current_Price")).toDouble();
-        m_Item.amount=mQSqlQuery->value(rec.indexOf("Amount")).toInt();
+        m_Item.amount=mQSqlQuery->value(rec.indexOf("Amount")).toDouble();
         m_Item.priority=mQSqlQuery->value(rec.indexOf("Priority")).toInt();
 
         return true;
@@ -77,7 +80,18 @@ bool ItemDB::getNextItem(Item& m_Item)
 {
     if (!isActivatedSelect)
     {
-        mQSqlQuery->prepare("SELECT * FROM t_List_Items where id_shop=:id_shop and id_category=:id_category order by Priority,Name");
+        //Получение заказанных продуктов
+        QString select_for_data;
+        if (m_select_buy==e_select)
+        {
+            select_for_data="SELECT * FROM t_List_Items where id_shop=:id_shop and id_category=:id_category order by Priority DESC,Name";
+        }
+        else
+        {
+            select_for_data="SELECT * FROM t_List_Items where id_shop=:id_shop and id_category=:id_category and Amount>0 order by Priority DESC,Name";
+        };
+
+        mQSqlQuery->prepare(select_for_data);
         mQSqlQuery->bindValue(":id_shop", id_Shop);
         mQSqlQuery->bindValue(":id_category", id_Category);
         if (!mQSqlQuery->exec())
@@ -94,7 +108,7 @@ bool ItemDB::getNextItem(Item& m_Item)
         m_Item.id=mQSqlQuery->value(rec.indexOf("id")).toInt();
         m_Item.Name=mQSqlQuery->value(rec.indexOf("Name")).toString();
         m_Item.current_Price=mQSqlQuery->value(rec.indexOf("Current_Price")).toDouble();
-        m_Item.amount=mQSqlQuery->value(rec.indexOf("Amount")).toInt();
+        m_Item.amount=mQSqlQuery->value(rec.indexOf("Amount")).toDouble();
 
         return true;
     }

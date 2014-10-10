@@ -1,7 +1,7 @@
 #include "shopdb.h"
 #include "Singleton.h"
 
-ShopDB::ShopDB()
+ShopDB::ShopDB(e_select_buy v_select_buy) : isActivatedSelect(false), m_select_buy(v_select_buy)
 {
     mQSqlQuery=Singleton_M::Intance().get_new_query();
 }
@@ -29,7 +29,18 @@ bool ShopDB::getNextShop(Shop& m_Shop)
 {
     if (!isActivatedSelect)
     {
-        if (!mQSqlQuery->exec("SELECT * FROM t_Shop_list order by Name"))
+        //Получение магазинов, где есть заказы
+        QString select_for_data;
+        if (m_select_buy==e_select)
+        {
+            select_for_data="SELECT * FROM t_Shop_list order by Name";
+        }
+        else
+        {
+            select_for_data="SELECT * FROM t_Shop_list where id in (SELECT DISTINCT id_shop FROM t_List_Items where Amount>0) order by Name";
+        };
+
+        if (!mQSqlQuery->exec(select_for_data))
         {
             qDebug() << "Error select Shop";
             return false;

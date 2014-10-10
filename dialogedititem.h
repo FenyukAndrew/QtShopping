@@ -1,9 +1,9 @@
 #ifndef DIALOGEDITITEM_H
 #define DIALOGEDITITEM_H
 
-#include <QDialog>
-
 //НЕ ИСПОЛЬЗУЕТСЯ - добавление и редактирование осуществляется в Dialog_Input_New_Item
+
+/*#include <QDialog>
 
 namespace Ui {
 class DialogEditItem;
@@ -19,6 +19,6 @@ public:
 
 private:
     Ui::DialogEditItem *ui;
-};
+};*/
 
 #endif // DIALOGEDITITEM_H

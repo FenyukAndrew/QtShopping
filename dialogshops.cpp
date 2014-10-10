@@ -6,15 +6,22 @@
 #include "Common_parameters.h"
 #include "dialogcategories.h"
 
-DialogShops::DialogShops(QWidget *parent) :
+DialogShops::DialogShops(e_select_buy v_select_buy,QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::DialogShops)
-{
+    ui(new Ui::DialogShops),
+    mShopDB(v_select_buy),
+    m_select_buy(v_select_buy)
+  {
     ui->setupUi(this);
 
     signalMapper=new QSignalMapper(this);
 
     fill_list_shops();
+
+    if (m_select_buy!=e_select)
+    {
+        ui->pushButton_AddShop->setEnabled(0);
+    }
 
     ANDROID_MAKE_WINDOW_FULL_SCREEN;
 }
@@ -60,7 +67,7 @@ void DialogShops::clear_list_shops()
 void DialogShops::on_pushButton_SelectShop_clicked(const int& v1)
 {
     //qDebug() << v1;
-    DialogCategories m_DialogCategories(v1);//Передача выбранного магазина
+    DialogCategories m_DialogCategories(v1,m_select_buy);//Передача выбранного магазина
     m_DialogCategories.exec();
 }
 

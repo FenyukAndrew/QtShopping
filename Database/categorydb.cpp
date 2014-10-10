@@ -1,7 +1,9 @@
 #include "categorydb.h"
 #include "Singleton.h"
 
-CategoryDB::CategoryDB(int m_id_shop) : id_shop(m_id_shop)
+CategoryDB::CategoryDB(int m_id_shop,e_select_buy v_select_buy) : isActivatedSelect(false),
+    id_shop(m_id_shop),
+    m_select_buy(v_select_buy)
 {
     mQSqlQuery=Singleton_M::Intance().get_new_query();
 }
@@ -29,7 +31,18 @@ bool CategoryDB::getNextCategory(Category& m_Category)
 {
     if (!isActivatedSelect)
     {
-        mQSqlQuery->prepare("SELECT * FROM t_Category where id_Shop=:id_Shop order by Name");
+        //Получение категорий, где есть заказы
+        QString select_for_data;
+        if (m_select_buy==e_select)
+        {
+            select_for_data="SELECT * FROM t_Category where id_Shop=:id_Shop order by Name";
+        }
+        else
+        {
+            select_for_data="SELECT * FROM t_Category where id_Shop=:id_Shop and id in (SELECT DISTINCT id_category FROM t_List_Items where Amount>0) order by Name";
+        };
+
+        mQSqlQuery->prepare(select_for_data);
         mQSqlQuery->bindValue(":id_Shop", id_shop);
         if (!mQSqlQuery->exec())
         {

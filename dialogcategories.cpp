@@ -7,17 +7,31 @@
 #include "dialogcategories.h"
 #include "dialogitems.h"
 
-DialogCategories::DialogCategories(int m_id_shop,QWidget *parent) :
+DialogCategories::DialogCategories(int m_id_shop,e_select_buy v_select_buy,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogCategories),
-   id_shop(m_id_shop),
-   mCategoryDB(m_id_shop)
+   mCategoryDB(m_id_shop,v_select_buy),
+   m_select_buy(v_select_buy),
+   id_shop(m_id_shop)
 {
     ui->setupUi(this);
 
     signalMapper=new QSignalMapper(this);
 
     fill_list_categories();
+
+    //Кнопка имеет двойное назначение, в зависимости от выбор или покупка
+    if (m_select_buy==e_select)
+    {
+        //AddCategory
+        ui->pushButton_Custom->setText("Добавить категорию");
+        connect(ui->pushButton_Custom, SIGNAL(clicked()), this, SLOT(on_pushButton_AddCategory_clicked()));
+    }
+    else
+    {
+        ui->pushButton_Custom->setText("Оплата на кассе");
+        //connect(ui->pushButton_Custom, SIGNAL(clicked()), this, SLOT(on_pushButton_SelectCategory_clicked(const int &)));
+    }
 
     ANDROID_MAKE_WINDOW_FULL_SCREEN;
 }
@@ -62,7 +76,7 @@ void DialogCategories::clear_list_categories()
 void DialogCategories::on_pushButton_SelectCategory_clicked(const int& v1)
 {
     //qDebug() << v1;
-    DialogItems m_DialogItems(id_shop,v1);//Передача выбранного магазина и категории
+    DialogItems m_DialogItems(id_shop,v1,m_select_buy);//Передача выбранного магазина и категории
     m_DialogItems.exec();
 }
 

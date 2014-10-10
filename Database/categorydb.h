@@ -7,7 +7,7 @@
 class CategoryDB
 {
 public:
-    CategoryDB(int m_id_shop);
+    CategoryDB(int m_id_shop,e_select_buy v_select_buy);
     ~CategoryDB();
 
     void addCategory(const Category& m_Category);
@@ -20,6 +20,7 @@ private:
     bool isActivatedSelect;
 
     const int id_shop;
+    const e_select_buy m_select_buy;
 };
 
 #endif // CATEGORYDB_H

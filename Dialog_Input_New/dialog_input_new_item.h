@@ -15,7 +15,7 @@ class Dialog_Input_New_Item : public QDialog
     Q_OBJECT
 
 public:
-    explicit Dialog_Input_New_Item(Item& v_Item,QWidget *parent = 0);
+    explicit Dialog_Input_New_Item(Item& v_Item,e_new_edit_element type_new_edit,QWidget *parent = 0);
     ~Dialog_Input_New_Item();
 
     //Item& get_Item() {return m_Item;}

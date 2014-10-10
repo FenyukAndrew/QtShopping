@@ -43,10 +43,15 @@ struct Item
         id=0;
         id_shop=0;
         id_category=0;
-        current_Price=0;
-        amount=0;
+        current_Price=0.0;
+        amount=0.0;
         priority=0;
     }
 };
+
+enum e_new_edit_element {e_new,e_edit};
+
+//Выбор продуктов или покупка
+enum e_select_buy {e_select,e_buy};
 
 #endif // COMMON_STRUCT_DATA_H
