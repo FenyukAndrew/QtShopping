@@ -33,11 +33,19 @@ bool ShopDB::getNextShop(Shop& m_Shop)
         QString select_for_data;
         if (m_select_buy==e_select)
         {
-            select_for_data="SELECT * FROM t_Shop_list order by Name";
+            //select_for_data="SELECT * FROM t_Shop_list order by Name";
+            select_for_data="select t_s.*,t_sum.sum from"
+                 " (select id_shop,sum(Current_Price*Amount) sum from t_List_Items"
+                 " group by id_shop) t_sum"
+                 " join t_Shop_list t_s on t_s.id=t_sum.id_shop order by Name";
         }
         else
         {
-            select_for_data="SELECT * FROM t_Shop_list where id in (SELECT DISTINCT id_shop FROM t_List_Items where Amount>0) order by Name";
+            //select_for_data="SELECT * FROM t_Shop_list where id in (SELECT DISTINCT id_shop FROM t_List_Items where Amount>0) order by Name";
+            select_for_data="select t_s.*,t_sum.sum from"
+                 " (select id_shop,sum(Current_Price*Amount) sum from t_List_Items where Amount>0"
+                 " group by id_shop having sum>0) t_sum"
+                 " join t_Shop_list t_s on t_s.id=t_sum.id_shop order by Name";
         };
 
         if (!mQSqlQuery->exec(select_for_data))
@@ -55,6 +63,7 @@ bool ShopDB::getNextShop(Shop& m_Shop)
         m_Shop.Name=mQSqlQuery->value(rec.indexOf("Name")).toString();
         m_Shop.Note=mQSqlQuery->value(rec.indexOf("Note")).toString();
         m_Shop.Place=mQSqlQuery->value(rec.indexOf("Place")).toString();
+        m_Shop.sum=mQSqlQuery->value(rec.indexOf("sum")).toDouble();
 
         return true;
     }

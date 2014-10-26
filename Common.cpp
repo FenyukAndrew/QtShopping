@@ -4,8 +4,7 @@
 
 #ifdef Q_OS_ANDROID
 //Для Android версии
-const char* pathDB="/mnt/sdcard/sdcard2/My_Shopping.db";
-//const char* pathDB="/mnt/sdcard/My_Shopping.db";//Для 1 SD Card
+const char* pathDB="/mnt/sdcard/My_Shopping.db";
 
 //Т.к. Android принадлежит множеству Linux
 #elif defined(Q_OS_LINUX)

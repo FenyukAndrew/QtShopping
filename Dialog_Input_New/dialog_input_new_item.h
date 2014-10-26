@@ -25,6 +25,12 @@ private slots:
 
     void on_pushButton_Cancel_clicked();
 
+    void on_LineEdit_Current_Price_textChanged(const QString &arg1);
+
+    void on_LineEdit_Amount_textChanged(const QString &arg1);
+
+    void calculate();
+
 private:
     Ui::Dialog_Input_New_Item *ui;
 

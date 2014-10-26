@@ -55,3 +55,29 @@ void Dialog_Input_New_Item::on_pushButton_Cancel_clicked()
     //this->close();
     QDialog::reject();
 }
+
+void Dialog_Input_New_Item::on_LineEdit_Current_Price_textChanged(const QString &arg1)
+{
+    calculate();
+}
+
+void Dialog_Input_New_Item::on_LineEdit_Amount_textChanged(const QString &arg1)
+{
+    calculate();
+}
+
+void Dialog_Input_New_Item::calculate()
+{
+    bool ok,ok_amount;
+    double current_Price=Singleton_M::Intance().locale().toDouble(ui->LineEdit_Current_Price->text(),&ok);
+    double amount=Singleton_M::Intance().locale().toDouble(ui->LineEdit_Amount->text(),&ok_amount);
+    if (ok&&ok_amount)
+    {
+        ui->Value_Total->setText(Singleton_M::Intance().locale().toString(current_Price*amount,'f',2));
+    }
+    else
+    {
+        ui->Value_Total->setText("--.--");
+    }
+}
+

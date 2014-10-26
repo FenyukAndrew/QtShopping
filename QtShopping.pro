@@ -18,7 +18,6 @@ SOURCES += main.cpp\
     dialogshops.cpp \
     dialogcategories.cpp \
     dialogitems.cpp \
-    dialogedititem.cpp \
     Common.cpp \
     Singleton.cpp \
     Database/shopdb.cpp \
@@ -28,13 +27,13 @@ SOURCES += main.cpp\
     Dialog_Input_New/dialog_input_new_category.cpp \
     Dialog_Input_New/dialog_input_new_shop.cpp \
     common_struct_data.cpp \ 
-    Dialog_Input_New/dialog_input_new_item.cpp
+    Dialog_Input_New/dialog_input_new_item.cpp \
+    Database/cashdb.cpp
 
 HEADERS  += mainwindow.h \
     dialogshops.h \
     dialogcategories.h \
     dialogitems.h \
-    dialogedititem.h \
     Common.h \
     Common_parameters.h \
     Singleton.h \
@@ -45,13 +44,13 @@ HEADERS  += mainwindow.h \
     Dialog_Input_New/dialog_input_new_category.h \
     Dialog_Input_New/dialog_input_new_shop.h \
     common_struct_data.h \
-    Dialog_Input_New/dialog_input_new_item.h
+    Dialog_Input_New/dialog_input_new_item.h \
+    Database/cashdb.h
 
 FORMS    += mainwindow.ui \
     dialogshops.ui \
     dialogcategories.ui \
     dialogitems.ui \
-    dialogedititem.ui \
     Dialog_Input_New/dialog_input_new_category.ui \
     Dialog_Input_New/dialog_input_new_shop.ui \
     Dialog_Input_New/dialog_input_new_item.ui

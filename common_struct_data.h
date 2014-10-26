@@ -9,10 +9,12 @@ struct Shop
     QString Name;
     QString Place;
     QString Note;
+    double sum;//Сумма цен всех товаров в данном магазине умноженное на количество
 
     Shop()
     {
         id=0;
+        sum=0.0;
     }
 };
 
@@ -21,10 +23,12 @@ struct Category
     int id;
     QString Name;
     QString Note;
+    double sum;//Сумма цен всех товаров в данной категории умноженное на количество
 
     Category()
     {
         id=0;
+        sum=0.0;
     }
 };
 

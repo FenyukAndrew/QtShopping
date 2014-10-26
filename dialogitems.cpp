@@ -40,7 +40,13 @@ void DialogItems::fill_list_items()
     while (mItemDB.getNextItem(m_Item))
     {
         QPushButton *button1 = new QPushButton();
-        button1->setText(m_Item.Name);
+        double sum=m_Item.current_Price*m_Item.amount;
+        QString str_sum="";
+        if (sum>=0.01)
+        {
+            str_sum="="+Singleton_M::Intance().locale().toString(sum,'f',2);
+        }
+        button1->setText(m_Item.Name+str_sum);
 
         connect(button1, SIGNAL(clicked()), signalMapper, SLOT(map()));
         signalMapper->setMapping(button1, m_Item.id);

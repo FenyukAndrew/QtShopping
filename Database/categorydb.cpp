@@ -35,11 +35,21 @@ bool CategoryDB::getNextCategory(Category& m_Category)
         QString select_for_data;
         if (m_select_buy==e_select)
         {
-            select_for_data="SELECT * FROM t_Category where id_Shop=:id_Shop order by Name";
+            //select_for_data="SELECT * FROM t_Category where id_Shop=:id_Shop order by Name";
+            //Подсчет суммы для каждой категории
+            select_for_data="select t_c.*,t_sum.sum from"
+               " (select id_category,sum(Current_Price*Amount) sum from t_List_Items"
+               " where id_shop=:id_Shop group by id_category) t_sum"
+               " join t_Category t_c on t_c.id=t_sum.id_category order by Name";
         }
         else
         {
-            select_for_data="SELECT * FROM t_Category where id_Shop=:id_Shop and id in (SELECT DISTINCT id_category FROM t_List_Items where Amount>0) order by Name";
+            //select_for_data="SELECT * FROM t_Category where id_Shop=:id_Shop and id in (SELECT DISTINCT id_category FROM t_List_Items where id_Shop=:id_Shop and Amount>0) order by Name";
+            //Подсчет суммы для каждой категории
+            select_for_data="select t_c.*,t_sum.sum from"
+               "(select id_category,sum(Current_Price*Amount) sum from t_List_Items where id_shop=:id_Shop and Amount>0"
+               " group by id_category having sum>0) t_sum"
+               " join t_Category t_c on t_c.id=t_sum.id_category order by Name";
         };
 
         mQSqlQuery->prepare(select_for_data);
@@ -58,6 +68,7 @@ bool CategoryDB::getNextCategory(Category& m_Category)
         m_Category.id=mQSqlQuery->value(rec.indexOf("id")).toInt();
         m_Category.Name=mQSqlQuery->value(rec.indexOf("Name")).toString();
         m_Category.Note=mQSqlQuery->value(rec.indexOf("Note")).toString();
+        m_Category.sum=mQSqlQuery->value(rec.indexOf("sum")).toDouble();
 
         return true;
     }

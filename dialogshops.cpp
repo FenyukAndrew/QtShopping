@@ -38,7 +38,12 @@ void DialogShops::fill_list_shops()
     while (mShopDB.getNextShop(m_Shop))
     {
         QPushButton *button1 = new QPushButton();
-        button1->setText(m_Shop.Name);
+        QString str_sum="";
+        if (m_Shop.sum>=0.01)
+        {
+            str_sum="="+Singleton_M::Intance().locale().toString(m_Shop.sum,'f',2);
+        }
+        button1->setText(m_Shop.Name+str_sum);
 
         connect(button1, SIGNAL(clicked()), signalMapper, SLOT(map()));
         signalMapper->setMapping(button1, m_Shop.id);
@@ -69,6 +74,10 @@ void DialogShops::on_pushButton_SelectShop_clicked(const int& v1)
     //qDebug() << v1;
     DialogCategories m_DialogCategories(v1,m_select_buy);//Передача выбранного магазина
     m_DialogCategories.exec();
+
+    //Иначе после изменения цены или количества не изменяется сумма отображаемая напротив магазина
+    clear_list_shops();
+    fill_list_shops();
 }
 
 void DialogShops::on_pushButton_AddShop_clicked()

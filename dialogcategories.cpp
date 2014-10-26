@@ -30,7 +30,7 @@ DialogCategories::DialogCategories(int m_id_shop,e_select_buy v_select_buy,QWidg
     else
     {
         ui->pushButton_Custom->setText("Оплата на кассе");
-        //connect(ui->pushButton_Custom, SIGNAL(clicked()), this, SLOT(on_pushButton_SelectCategory_clicked(const int &)));
+        connect(ui->pushButton_Custom, SIGNAL(clicked()), this, SLOT(on_pushButton_Payment_at_checkout()));
     }
 
     ANDROID_MAKE_WINDOW_FULL_SCREEN;
@@ -47,7 +47,12 @@ void DialogCategories::fill_list_categories()
     while (mCategoryDB.getNextCategory(m_Category))
     {
         QPushButton *button1 = new QPushButton();
-        button1->setText(m_Category.Name);
+        QString str_sum="";
+        if (m_Category.sum>=0.01)
+        {
+            str_sum="="+Singleton_M::Intance().locale().toString(m_Category.sum,'f',2);
+        }
+        button1->setText(m_Category.Name+str_sum);
 
         connect(button1, SIGNAL(clicked()), signalMapper, SLOT(map()));
         signalMapper->setMapping(button1, m_Category.id);
@@ -78,6 +83,15 @@ void DialogCategories::on_pushButton_SelectCategory_clicked(const int& v1)
     //qDebug() << v1;
     DialogItems m_DialogItems(id_shop,v1,m_select_buy);//Передача выбранного магазина и категории
     m_DialogItems.exec();
+
+    //Иначе после изменения цены или количества не изменяется сумма отображаемая напротив категории
+    clear_list_categories();
+    fill_list_categories();
+}
+
+void DialogCategories::on_pushButton_Payment_at_checkout()
+{
+
 }
 
 void DialogCategories::on_pushButton_AddCategory_clicked()
