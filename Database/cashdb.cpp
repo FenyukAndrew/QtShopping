@@ -1,4 +1,5 @@
 #include "cashdb.h"
+#include "Singleton.h"
 
 CashDB::CashDB()
 {

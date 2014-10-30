@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "dialogshops.h"
 #include "Common_parameters.h"
+#include "dialogcash.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,8 +26,9 @@ void MainWindow::on_pushButtonOrder_clicked()
 
 void MainWindow::on_pushButtonCash_clicked()
 {
-//Сохранить в отдельную таблицу - т.к. приложение может быть закрыто
-//Только одна запись, добавить при создании или если нет ни одной
+    DialogCash m_DialogCash;
+    //int retCode =
+    m_DialogCash.exec();
 }
 
 void MainWindow::on_pushButtonBuy_clicked()

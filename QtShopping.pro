@@ -28,7 +28,10 @@ SOURCES += main.cpp\
     Dialog_Input_New/dialog_input_new_shop.cpp \
     common_struct_data.cpp \ 
     Dialog_Input_New/dialog_input_new_item.cpp \
-    Database/cashdb.cpp
+    Database/cashdb.cpp \
+    dialogcash.cpp \
+    dialogpaymentcashbox.cpp \
+    Database/historydb.cpp
 
 HEADERS  += mainwindow.h \
     dialogshops.h \
@@ -45,7 +48,11 @@ HEADERS  += mainwindow.h \
     Dialog_Input_New/dialog_input_new_shop.h \
     common_struct_data.h \
     Dialog_Input_New/dialog_input_new_item.h \
-    Database/cashdb.h
+    Database/cashdb.h \
+    dialogcash.h \
+    dialogpaymentcashbox.h \
+    dialogpaymentcashbox.h \
+    Database/historydb.h
 
 FORMS    += mainwindow.ui \
     dialogshops.ui \
@@ -53,7 +60,10 @@ FORMS    += mainwindow.ui \
     dialogitems.ui \
     Dialog_Input_New/dialog_input_new_category.ui \
     Dialog_Input_New/dialog_input_new_shop.ui \
-    Dialog_Input_New/dialog_input_new_item.ui
+    Dialog_Input_New/dialog_input_new_item.ui \
+    dialogcash.ui \
+    dialogpaymentcashbox.ui \
+    dialogpaymentcashbox.ui
 
 CONFIG += c++11
 CONFIG += mobility

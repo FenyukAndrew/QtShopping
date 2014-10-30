@@ -80,11 +80,16 @@ void DialogItems::on_pushButton_SelectItem_clicked(const int& id_Item)
     {
         //Редактирование объекта
 
+        double last_price=m_Item.current_Price;
         Dialog_Input_New_Item m_Dialog_Input_New_Item(m_Item,e_edit);
         int retCode = m_Dialog_Input_New_Item.exec();
         if (retCode==QDialog::Accepted)
         {
             mItemDB.updateItem(m_Item);
+            if (fabs(last_price-m_Item.current_Price)>=0.01)
+            {
+                mItemDB.addPriceItemToHistory(m_Item.id,m_Item.current_Price);
+            }
 
             clear_list_items();
             fill_list_items();
@@ -100,6 +105,7 @@ void DialogItems::on_pushButton_AddItem_clicked()
     if (retCode==QDialog::Accepted)
     {
         mItemDB.addItem(m_Item);
+        mItemDB.addPriceNewItemToHistory(m_Item.current_Price);
 
         clear_list_items();
         fill_list_items();

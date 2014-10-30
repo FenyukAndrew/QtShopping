@@ -14,6 +14,9 @@ public:
 
     void updateItem(const Item& m_Item);
 
+    void addPriceNewItemToHistory(const double price);
+    void addPriceItemToHistory(const int id_item,const double price);
+
     bool selectItemById(int id_Item,Item& m_Item);
 
     bool getNextItem(Item& m_Item);

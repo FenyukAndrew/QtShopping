@@ -44,13 +44,14 @@ struct Item
 
     Item()
     {
-        id=0;
+        id=-1;//Новое значение
         id_shop=0;
         id_category=0;
         current_Price=0.0;
         amount=0.0;
         priority=0;
     }
+
 };
 
 enum e_new_edit_element {e_new,e_edit};

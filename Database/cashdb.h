@@ -8,6 +8,7 @@ class CashDB
 {
 public:
     CashDB();
+    ~CashDB();
 
     void init_cash(double sum);
     void add_payment(double sum_payment);

@@ -6,6 +6,7 @@
 #include "Dialog_Input_New/dialog_input_new_category.h"
 #include "dialogcategories.h"
 #include "dialogitems.h"
+#include "dialogpaymentcashbox.h"
 
 DialogCategories::DialogCategories(int m_id_shop,e_select_buy v_select_buy,QWidget *parent) :
     QDialog(parent),
@@ -43,6 +44,7 @@ DialogCategories::~DialogCategories()
 
 void DialogCategories::fill_list_categories()
 {
+    total_sum_shop=0;
     Category m_Category;
     while (mCategoryDB.getNextCategory(m_Category))
     {
@@ -53,6 +55,8 @@ void DialogCategories::fill_list_categories()
             str_sum="="+Singleton_M::Intance().locale().toString(m_Category.sum,'f',2);
         }
         button1->setText(m_Category.Name+str_sum);
+
+        total_sum_shop+=m_Category.sum;
 
         connect(button1, SIGNAL(clicked()), signalMapper, SLOT(map()));
         signalMapper->setMapping(button1, m_Category.id);
@@ -91,7 +95,14 @@ void DialogCategories::on_pushButton_SelectCategory_clicked(const int& v1)
 
 void DialogCategories::on_pushButton_Payment_at_checkout()
 {
-
+    DialogPaymentCashbox m_DialogPaymentCashbox(id_shop,total_sum_shop);
+    int retCode = m_DialogPaymentCashbox.exec();
+    if (retCode==QDialog::Accepted)
+    {//Оплата произведена больше покупок в этом мазине нет
+        //clear_list_categories();
+        //fill_list_categories();
+        QDialog::reject();
+    }
 }
 
 void DialogCategories::on_pushButton_AddCategory_clicked()

@@ -49,6 +49,33 @@ void ItemDB::updateItem(const Item& m_Item)
 
 }
 
+void ItemDB::addPriceNewItemToHistory(const double price)
+{
+    mQSqlQuery->prepare("insert into t_History_price (id_Item,DateTime,Price)"
+    " select max(id), datetime('now','localtime'), :price from t_List_Items");
+    mQSqlQuery->bindValue(":price", price);
+
+    if (!mQSqlQuery->exec())
+    {
+        qDebug() << "Error addPriceNewItemToHistory";
+    }
+
+}
+
+void ItemDB::addPriceItemToHistory(const int id_item,const double price)
+{
+    mQSqlQuery->prepare("insert into t_History_price (id_Item,DateTime,Price)"
+    " values (:id_item, datetime('now','localtime'), :price)");
+    mQSqlQuery->bindValue(":id_item", id_item);
+    mQSqlQuery->bindValue(":price", price);
+
+    if (!mQSqlQuery->exec())
+    {
+        qDebug() << "Error addPriceItemToHistory";
+    }
+
+}
+
 //Для редактирования выбранного объекта
 bool ItemDB::selectItemById(int id_Item,Item& m_Item)
 {

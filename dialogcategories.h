@@ -39,6 +39,8 @@ private:
 
     const int id_shop;
 
+    double total_sum_shop;
+
 };
 
 #endif // DIALOGCATEGORIES_H
