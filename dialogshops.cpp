@@ -43,7 +43,8 @@ void DialogShops::fill_list_shops()
         {
             str_sum="="+Singleton_M::Intance().locale().toString(m_Shop.sum,'f',2);
         }
-        button1->setText(m_Shop.Name+str_sum);
+        QString place=(m_Shop.Place.isEmpty()) ? "" : "("+m_Shop.Place+")";
+        button1->setText(m_Shop.Name+place+str_sum);
 
         connect(button1, SIGNAL(clicked()), signalMapper, SLOT(map()));
         signalMapper->setMapping(button1, m_Shop.id);

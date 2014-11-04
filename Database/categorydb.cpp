@@ -37,10 +37,13 @@ bool CategoryDB::getNextCategory(Category& m_Category)
         {
             //select_for_data="SELECT * FROM t_Category where id_Shop=:id_Shop order by Name";
             //Подсчет суммы для каждой категории
-            select_for_data="select t_c.*,t_sum.sum from"
-               " (select id_category,sum(Current_Price*Amount) sum from t_List_Items"
-               " where id_shop=:id_Shop group by id_category) t_sum"
-               " join t_Category t_c on t_c.id=t_sum.id_category order by Name";
+            //Нужно выводиться все записи из таблицы t_Category
+            //иначе проблема в сборе данных, если у магазина нет товаров он не выводиться
+            select_for_data="select * from t_Category t_c"
+                   " left join (select id_category,sum(Current_Price*Amount) sum from t_List_Items where id_shop=:id_Shop group by id_category) t_sum"
+                   " on t_c.id=t_sum.id_category"
+                   " where t_c.id_shop=:id_Shop"
+                   " order by Name";
         }
         else
         {
@@ -48,7 +51,7 @@ bool CategoryDB::getNextCategory(Category& m_Category)
             //Подсчет суммы для каждой категории
             select_for_data="select t_c.*,t_sum.sum from"
                "(select id_category,sum(Current_Price*Amount) sum from t_List_Items where id_shop=:id_Shop and Amount>0"
-               " group by id_category having sum>0) t_sum"
+               " group by id_category) t_sum" //  having sum>0 если цена должна быть указана
                " join t_Category t_c on t_c.id=t_sum.id_category order by Name";
         };
 

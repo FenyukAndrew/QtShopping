@@ -34,17 +34,18 @@ bool ShopDB::getNextShop(Shop& m_Shop)
         if (m_select_buy==e_select)
         {
             //select_for_data="SELECT * FROM t_Shop_list order by Name";
-            select_for_data="select t_s.*,t_sum.sum from"
-                 " (select id_shop,sum(Current_Price*Amount) sum from t_List_Items"
-                 " group by id_shop) t_sum"
-                 " join t_Shop_list t_s on t_s.id=t_sum.id_shop order by Name";
+            //Нужно выводиться все записи из таблицы t_Shop_list
+            //иначе проблема в сборе данных, если у магазина нет товаров он не выводиться
+            select_for_data="select * from t_Shop_list t_s"
+                   " left join (select id_shop,sum(Current_Price*Amount) sum from t_List_Items group by id_shop) t_sum"
+                   " on t_s.id=t_sum.id_shop order by Name";
         }
         else
         {
             //select_for_data="SELECT * FROM t_Shop_list where id in (SELECT DISTINCT id_shop FROM t_List_Items where Amount>0) order by Name";
             select_for_data="select t_s.*,t_sum.sum from"
                  " (select id_shop,sum(Current_Price*Amount) sum from t_List_Items where Amount>0"
-                 " group by id_shop having sum>0) t_sum"
+                 " group by id_shop) t_sum"// having sum>0 если цена должна быть указана
                  " join t_Shop_list t_s on t_s.id=t_sum.id_shop order by Name";
         };
 
