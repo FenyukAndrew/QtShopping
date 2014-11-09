@@ -11,7 +11,12 @@ public:
     ~HistoryDB();
 
     void add_items_shop_history(const int _id_shop);
+
+    //Обнуление количества покупок у магазина
     void null_amount_items(const int _id_shop);
+
+    //Получение истории покупок за текущий день
+    void get_history_items();
 
 private:
     QSqlQuery* mQSqlQuery;

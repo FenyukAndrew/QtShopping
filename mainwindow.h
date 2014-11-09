@@ -22,6 +22,8 @@ private slots:
 
     void on_pushButtonBuy_clicked();
 
+    void on_pushButtonHistory_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

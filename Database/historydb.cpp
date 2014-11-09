@@ -14,7 +14,7 @@ HistoryDB::~HistoryDB()
 void HistoryDB::add_items_shop_history(const int _id_shop)
 {
     mQSqlQuery->prepare("insert into t_History_purchases (DateTime, id_item, Price, Amount)"
-    " select datetime('now','localtime'), id, Current_Price,Amount from t_List_Items where Amount>0 and id_shop=:id_shop");
+    " select datetime('now','localtime'), id, Current_Price,Amount from t_List_Items where Amount>0 and Price>0 and id_shop=:id_shop");
     mQSqlQuery->bindValue(":id_shop", _id_shop);
 
     if (!mQSqlQuery->exec())
@@ -32,6 +32,20 @@ void HistoryDB::null_amount_items(const int _id_shop)
     if (!mQSqlQuery->exec())
     {
         qDebug() << "Error HistoryDB::null_amount_items";
+    }
+
+}
+
+void HistoryDB::get_history_items()
+{
+    mQSqlQuery->prepare("SELECT thp.DateTime,thp.Price,thp.Amount,tli.Name FROM t_History_purchases thp"
+                        " left join t_List_Items tli on thp.id_item=tli.id"
+                        " where DateTime>datetime('now','localtime')"
+                        " order by DateTime DESC");
+
+    if (!mQSqlQuery->exec())
+    {
+        qDebug() << "Error HistoryDB::get_history_items";
     }
 
 }

@@ -3,6 +3,7 @@
 #include "dialogshops.h"
 #include "Common_parameters.h"
 #include "dialogcash.h"
+#include "dialoghistoryitems.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -35,4 +36,10 @@ void MainWindow::on_pushButtonBuy_clicked()
 {
     DialogShops mDialogShops(e_buy);
     mDialogShops.exec();
+}
+
+void MainWindow::on_pushButtonHistory_clicked()
+{
+    DialogHistoryItems mDialogHistoryItems;
+    mDialogHistoryItems.exec();
 }
