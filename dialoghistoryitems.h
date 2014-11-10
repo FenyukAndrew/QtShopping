@@ -15,6 +15,11 @@ public:
     explicit DialogHistoryItems(QWidget *parent = 0);
     ~DialogHistoryItems();
 
+    void fill_table_view();
+
+private slots:
+    void on_pushButton_Cancel_clicked();
+
 private:
     Ui::DialogHistoryItems *ui;
 };

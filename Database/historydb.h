@@ -16,11 +16,13 @@ public:
     void null_amount_items(const int _id_shop);
 
     //Получение истории покупок за текущий день
-    void get_history_items();
+    bool getNextHistoryItem(HistoryItem &m_HistoryItem);
 
 private:
     QSqlQuery* mQSqlQuery;
     QSqlRecord rec;
+
+    bool isActivatedSelectHistoryItem;
 };
 
 #endif // HISTORYDB_H

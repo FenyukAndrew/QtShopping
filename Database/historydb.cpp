@@ -36,16 +36,34 @@ void HistoryDB::null_amount_items(const int _id_shop)
 
 }
 
-void HistoryDB::get_history_items()
+bool HistoryDB::getNextHistoryItem(HistoryItem& m_HistoryItem)
 {
-    mQSqlQuery->prepare("SELECT thp.DateTime,thp.Price,thp.Amount,tli.Name FROM t_History_purchases thp"
-                        " left join t_List_Items tli on thp.id_item=tli.id"
-                        " where DateTime>datetime('now','localtime')"
-                        " order by DateTime DESC");
-
-    if (!mQSqlQuery->exec())
+    if (!isActivatedSelectHistoryItem)
     {
-        qDebug() << "Error HistoryDB::get_history_items";
+        //Берутся данные за последние 24 часа
+        mQSqlQuery->prepare("SELECT thp.DateTime,thp.Price,thp.Amount,tli.Name FROM t_History_purchases thp"
+                            " left join t_List_Items tli on thp.id_item=tli.id"
+                            " where DateTime>DATETIME(datetime('now','localtime'), '-24 hours')"
+                            " order by DateTime DESC");
+
+        if (!mQSqlQuery->exec())
+        {
+            qDebug() << "Error HistoryDB::getNextHistoryItem";
+            return false;
+        }
+        rec = mQSqlQuery->record();
+        isActivatedSelectHistoryItem=true;
     }
 
+    if (mQSqlQuery->next())
+    {
+        m_HistoryItem.mDateTime=mQSqlQuery->value(rec.indexOf("DateTime")).toDateTime();
+        m_HistoryItem.price=mQSqlQuery->value(rec.indexOf("Price")).toDouble();
+        m_HistoryItem.amount=mQSqlQuery->value(rec.indexOf("Amount")).toDouble();
+        m_HistoryItem.Name=mQSqlQuery->value(rec.indexOf("Name")).toString();
+
+        return true;
+    }
+    isActivatedSelectHistoryItem=false;
+    return false;
 }

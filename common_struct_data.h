@@ -2,6 +2,7 @@
 #define COMMON_STRUCT_DATA_H
 
 #include "QString"
+#include <QDate>
 
 struct Shop
 {
@@ -52,6 +53,14 @@ struct Item
         priority=0;
     }
 
+};
+
+struct HistoryItem
+{
+    QDateTime mDateTime;
+    float price;
+    QString Name;
+    float amount;
 };
 
 enum e_new_edit_element {e_new,e_edit};

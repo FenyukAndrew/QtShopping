@@ -2,7 +2,7 @@
 #define DIALOG_INPUT_NEW_ITEM_H
 
 #include <QDialog>
-#include <QDate>
+//#include <QDate>
 #include "common_struct_data.h"
 
 namespace Ui
